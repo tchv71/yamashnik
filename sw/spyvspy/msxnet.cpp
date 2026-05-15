@@ -57,7 +57,7 @@ void sendCommand(const char* port, int studentNo, const char* command)
     }
 }
 
-void halp() 
+void help() 
 {
     info("Usage: msxnet [options] [command] file1 file2 ...\n");
     info("  options:\n");
@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
         /* Detect the end of the options. */
         if (c == -1) {
             if (!workdone)
-                halp();
+                help();
             break;
         }
      

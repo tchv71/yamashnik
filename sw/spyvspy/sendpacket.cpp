@@ -159,8 +159,8 @@ void PacketSender::CheckPacket() {
     morbose("CheckPacket: ");
 
     // Header
-    if ((buf[0] == 0xf0) || (buf [0] == 0x78) // sorry :)
-        && (buf[1] == 00))
+    if ((buf[0] == 0xf0) || ((buf [0] == 0x78) // sorry :)
+        && (buf[1] == 00)))
     {
         dst = buf[2];
         src = buf[4];

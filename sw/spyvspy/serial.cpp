@@ -31,7 +31,7 @@ int SerialPort::Setup()
     bzero (&newtio, sizeof(newtio));
     cfmakeraw(&newtio);
 
-    newtio.c_cflag = BAUDRATE | CS8 | PARENB | CLOCAL | CREAD;// | CSTOPB;
+    newtio.c_cflag = BAUDRATE | CS8 | PARENB | CLOCAL | CREAD | CSTOPB;
     newtio.c_iflag = 0;
     newtio.c_oflag = 0;
 

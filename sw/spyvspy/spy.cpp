@@ -38,7 +38,7 @@ void Spy::extractExePath() {
 		FILE* which = popen(arg, "r");
 		if (which != 0) {
 			fread(path, 1, GLOB_MAXPATH-1, which);
-			fclose(which);
+			pclose(which);
 
 			fullPath = path;
 		} 

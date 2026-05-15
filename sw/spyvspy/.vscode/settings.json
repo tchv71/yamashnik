@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/tchv/yamashnik/sw/spyvspy/build",
+            "binaryPath": "/home/tchv/yamashnik/sw/spyvspy/build/msxnet",
+            "binaryArgs": []
+        }
+    ]
+}
