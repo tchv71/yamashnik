@@ -1,6 +1,6 @@
 #pragma once
 
-#include <dirent.h>
+#include "dirent.h"
 #include "spydata.h"
 
 // a simple DOS-style globbor
@@ -12,8 +12,8 @@ class Globor {
 
 public:
     Globor(const char* path) {
-        m_path = new char[strlen(path) + 1];
-        strcpy(m_path, path);
+        m_path = _strdup(path); // new char[strlen(path) + 1];
+        //strcpy(m_path, path);
     }
 
     void SetPattern(const char* pattern) {

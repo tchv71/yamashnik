@@ -12,6 +12,13 @@ uint16_t PacketUtil::ReadEscapedWord(unsigned char *p) {
     return ((ReadEscapedByte (p) << 8) + ReadEscapedByte (p + 2));
 }
 
+PacketSender::PacketSender(SerialPort* p)
+{
+
+	serial = p;
+	serial->SetRxListener(this);
+}
+
 void PacketSender::SendEscapedByte(uint8_t b) const {
     SendByte((b & 128) >> 7);
     SendByte(b & 127);
@@ -89,7 +96,7 @@ void PacketSender::SendPacket(int srcAddr, int dstAddr, int cmdType, const uint8
 
             l -= 56;
 
-            serial->waitRx();
+            waitRx();
         } while (l > 0);
         break;
 
@@ -150,7 +157,13 @@ void PacketSender::SendPacketVal(GenericPacket& packet)
 
 int PacketSender::ReceivePacket() {
     pos = 0;
-    return serial->waitRx(50);
+    return waitRx(50);
+}
+#define MAXPKTSIZE	128
+
+int PacketSender::waitRx(const int intents /*= 10*/)
+{
+	return serial->waitRx(intents);
 }
 
 void PacketSender::CheckPacket() {

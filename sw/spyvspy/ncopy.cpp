@@ -22,14 +22,14 @@ void sendFile(const char* fileName, PacketSender& packetSender, int studentNo)
     static const char progressChar[] = "...--oo*OO0";
 
     uint8_t Sector[SECTORSIZE];
-    FILE* infile;
+    FILE* infile = nullptr;
     struct stat stat_p;
     int sectNo = 0;
 
     // check the size of file
     stat(fileName, &stat_p);
 
-    infile = fopen(fileName, "rb");
+    fopen_s(&infile, fileName, "rb");
     if (infile == 0) {
         eggog("Error: cannot open %s\n", fileName);
     }
@@ -94,7 +94,7 @@ void sendFile(const char* fileName, PacketSender& packetSender, int studentNo)
 
 void ncopy(const char* port, int studentNo, int nfiles, char* file[]) 
 {
-    SerialPort serialPort(port);
+    SerialPort serialPort(port, studentNo);
     PacketSender packetSender(&serialPort);
 
     if (serialPort.Setup() != ERR_NONE) {

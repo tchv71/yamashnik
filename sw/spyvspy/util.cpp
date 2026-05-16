@@ -10,8 +10,8 @@ int Util::dosname(const char* fname, char* buf83) {
     shrt = shrt ? (shrt + 1) : fname;
 
     const char* dot = strchr(shrt, '.');
-    int namelen = dot == 0 ? strlen(shrt) : dot - shrt;
-    int extlen = strlen(shrt) - namelen - 1;
+    size_t namelen = dot == 0 ? strlen(shrt) : dot - shrt;
+    size_t extlen = strlen(shrt) - namelen - 1;
     if (namelen > 8 || extlen > 3) {
         return 0;
     }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <inttypes.h>
-#include <strings.h>
+//#include <strings.h>
 #include "serial.h"
 #include "diags.h"
 #include "spydata.h"
@@ -32,7 +32,7 @@ private:
 
 public:
     Spy(const char* port, const char* argv0, int studentNo, int nfiles, char* file[]) 
-        : m_serial(port),
+        : m_serial(port, studentNo),
           m_argv0(argv0),
           m_studentNo(studentNo),
           m_nfiles(nfiles),
@@ -70,7 +70,7 @@ class SpyRequest
     uint8_t m_result;
     uint8_t m_func;
 
-    uint8_t* m_rxpattern;
+    char* m_rxpattern;
     int m_rxcursor;
 
     int m_datacursor;
@@ -88,8 +88,7 @@ public:
     }
 
     void expect(const uint8_t * RxPattern) {
-        m_rxpattern = new uint8_t[strlen((const char*)RxPattern) + 1];
-        strcpy((char *)m_rxpattern, (const char *)RxPattern);
+        m_rxpattern = _strdup((const char*)RxPattern);//new char[strlen((const char*)RxPattern) + 1];
         m_rxcursor = 0;
         m_datacursor = 0;
         m_bufoffset = 0;
@@ -262,8 +261,8 @@ public:
     }
 
     void respond(const uint8_t * TxPattern) {
-        m_txpattern = new uint8_t[strlen((const char*)TxPattern) + 1];
-        strcpy((char *)m_txpattern, (const char *)TxPattern);
+        m_txpattern = (uint8_t*)_strdup((char*)TxPattern);// uint8_t[strlen((const char*)TxPattern) + 1];
+        //strcpy((char *)m_txpattern, (const char *)TxPattern);
     }
 
     void AssignFCB(const FCB* fcb) {

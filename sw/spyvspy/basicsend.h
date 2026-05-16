@@ -19,7 +19,7 @@ private:
 
 public:
 	BasicSender(const char* port, int studentNo, int nfiles, char* file[]) 
-		: m_SerialPort(port),
+		: m_SerialPort(port, studentNo),
 		  m_packetSender(&m_SerialPort) ,
 		  m_studentNo(studentNo)
 	{
@@ -32,7 +32,7 @@ public:
 	}
 
 	BasicSender(SerialPort* serial, int studentNo) 
-		: m_SerialPort(0),
+		: m_SerialPort(0, studentNo),
 		  m_packetSender(serial),
 		  m_studentNo(studentNo)
 	{}

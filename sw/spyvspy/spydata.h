@@ -5,6 +5,7 @@
 #include <sys/time.h>
 #else
 #include <time.h>
+#include <ctime>
 #endif
 #include <sys/stat.h>
 #include <string.h>
@@ -101,7 +102,7 @@ private:
         for (int s = 8, c; s < 11 && (c = namext[s]) != ' '; normalname[i] = c, i++, s++);
         normalname[i] = 0;
     }
-} __attribute__((packed));
+} /*__attribute__((packed))*/;
 
 struct DIRENT {
             uint8_t AlwaysFF;
@@ -132,7 +133,7 @@ struct DIRENT {
         if (stat(file, &st) == 0) {
             // obtain values from the shortbus structs
             struct tm sanetime;
-            localtime_r(&st.st_mtime, &sanetime);
+            localtime_s(&sanetime, &st.st_mtime);
             int year = sanetime.tm_year + 1900;
             int month = sanetime.tm_mon;
             int day = sanetime.tm_mday;
@@ -154,8 +155,9 @@ struct DIRENT {
         }
 
     }
-} __attribute__((packed));;
+}/* __attribute__((packed))*/;
 
+#pragma pack(push, 1)
 struct DPB {                            // 0xF195
     uint8_t     Drive;                  // 00   DRIVE           DPB drive A:+00 Drive bij the dpb (0=A, 1=B, etc)
     uint8_t     Id;                     // F9   ID                          +01 Media ID byte (0F8h/0F9h)
@@ -190,4 +192,5 @@ struct DPB {                            // 0xF195
         FirstDir = 0x0007;
         FatAdr = 0xe595;
     };
-} __attribute__((packed));;
+}/* __attribute__((packed))*/;;
+#pragma pack(pop)

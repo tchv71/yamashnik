@@ -215,7 +215,7 @@ class PacketSender : public SerialListener {
 private:
 	SerialPort* serial;
 	unsigned char buf[1024];
-	int pos;
+	int pos=0;
 	NetFCB m_RxData;
 
 private:
@@ -223,10 +223,7 @@ private:
 	void GetRxData(uint8_t *p);
 	void CheckPacket();
 public:
-	PacketSender(SerialPort* p) { 
-		serial = p; 
-	    serial->SetRxListener(this);
-	}
+	PacketSender(SerialPort* p);
 	void SendByte(uint8_t b) const { serial->SendByte(b); }
 	void SendEscapedByte(uint8_t b) const;
 	void SendEscapedWord(uint16_t w) const;
@@ -236,4 +233,7 @@ public:
 	void SendPacketVal(GenericPacket&);
 	int ReceivePacket();
 	const NetFCB* GetNetFCB() const { return &m_RxData; }
+	int waitRx(const int intents = 10);
+
+
 };

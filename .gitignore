@@ -14,3 +14,13 @@ sw/spyvspy/spy_bdos_e900.ram
 sw/spyvspy/spy_bootstrap.bin
 
 sw/spyvspy/tpa.com
+/sw/spyvspy/x64/Debug/vc142.pdb
+/sw/spyvspy/x64/Debug/vc142.idb
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
+/.vs/yamashnik2/v16/Browse.VC.db
+/.vs/yamashnik2/v16/.suo
+/sw/spyvspy/x64/Debug/msxnet.log
+*.tlog
+*.obj
