@@ -43,6 +43,7 @@ int SerialPort::Setup()
 		dcbSerialParameters.StopBits = MSX_STOPBITS;	//ONESTOPBIT;
 		dcbSerialParameters.Parity = MSX_PARITY;	//NOPARITY;
 		dcbSerialParameters.fDtrControl = DTR_CONTROL_DISABLE/*DTR_CONTROL_ENABLE*/;
+		dcbSerialParameters.fRtsControl = RTS_CONTROL_DISABLE;
 
 		if (!SetCommState(handler, &dcbSerialParameters))
 		{
@@ -70,8 +71,10 @@ bool SerialPort::checkPacket(unsigned char* buf, int size)
 
 	if (size < 5)
 	{
-		if (verbose) { if (size > 1) printf("Wrong packet read[%d]: ", size);
-		dump(buf, size); puts(""); }
+		if (verbose) {
+			if (size > 1) printf("Wrong packet read[%d]: ", size);
+			dump(buf, size); puts("");
+		}
 		return false;
 	}
 	// Header
@@ -128,14 +131,14 @@ bool SerialPort::checkPacket(unsigned char* buf, int size)
 
 void SerialPort::getRxData(unsigned char* p)
 {
-	RxData.H = getByte(&p[11]);
-	RxData.F = getByte(&p[13]);
-	RxData.A = getByte(&p[15]);
-	if (verbose) printf("\n *** H: %.2x F: %.2x A: %.2x FCB: ", RxData.H, RxData.F, RxData.A);
-	for (int i = 0; i < sizeof(RxData.FCB); i++)
+	m_RxData.H = getByte(&p[11]);
+	m_RxData.F = getByte(&p[13]);
+	m_RxData.A = getByte(&p[15]);
+	if (verbose) printf("\n *** H: %.2x F: %.2x A: %.2x FCB: ", m_RxData.H, m_RxData.F, m_RxData.A);
+	for (int i = 0; i < sizeof(m_RxData.FCB); i++)
 	{
-		RxData.FCB[i] = getByte(&p[17 + i * 2]);
-		if (verbose) printf(" %.2x", RxData.FCB[i]);
+		m_RxData.FCB[i] = getByte(&p[17 + i * 2]);
+		if (verbose) printf(" %.2x", m_RxData.FCB[i]);
 	}
 	if (verbose) puts("");
 }
@@ -219,7 +222,7 @@ int SerialPort::read(uint8_t* buf, size_t len)
 	DWORD bytesRead;
 	size_t toRead = 0;
 	size_t size = len;
-	char *buffer = (char*) buf;
+	char* buffer = (char*)buf;
 	ClearCommError(handler, &errors, &status);
 
 	if (status.cbInQue > 0)

@@ -346,7 +346,7 @@ private:
 		do {
 			if (!f)
 				break;
-			if ((fileoffset >= (off_t) m_req->GetFCB()->FileSize) || (fseek(f, fileoffset, SEEK_SET) != 0) || (ftell(f) != fileoffset))
+			if ((fileoffset >= (off_t)m_req->GetFCB()->FileSize) || (fseek(f, fileoffset, SEEK_SET) != 0) || (ftell(f) != fileoffset))
 			{
 				info("<eof>");
 				break;

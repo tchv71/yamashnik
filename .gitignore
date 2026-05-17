@@ -24,3 +24,9 @@ sw/spyvspy/tpa.com
 /sw/spyvspy/x64/Debug/msxnet.log
 *.tlog
 *.obj
+/sw/spyvspy/DDT.COM
+/sw/spyvspy/ED.COM
+/sw/spyvspy/MAPINIT.COM
+/sw/spyvspy/1.txt
+/sw/spyvspy/.vs/msxnet/v16/Browse.VC.db
+/sw/spyvspy/.vs/msxnet/v16/.suo

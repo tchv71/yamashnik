@@ -3,7 +3,8 @@
 #include "serial.h"
 #include "sendpacket.h"
 
-class BasicSender {
+class BasicSender
+{
 private:
 	SerialPort m_SerialPort;
 	PacketSender m_packetSender;
@@ -18,23 +19,23 @@ private:
 	void sendBlocks(int start, int end);
 
 public:
-	BasicSender(const char* port, int studentNo, int nfiles, char* file[]) 
+	BasicSender(const char* port, int studentNo, int nfiles, char* file[])
 		: m_SerialPort(port, studentNo),
-		  m_packetSender(&m_SerialPort) ,
-		  m_studentNo(studentNo)
+		m_packetSender(&m_SerialPort),
+		m_studentNo(studentNo)
 	{
-	    if (m_SerialPort.Setup() != ERR_NONE) {
-	       info("BasicSender error: cannot open serial port %s\n", port);
-	       return;
-	    }
+		if (m_SerialPort.Setup() != ERR_NONE) {
+			info("BasicSender error: cannot open serial port %s\n", port);
+			return;
+		}
 
 		netSend(nfiles, file);
 	}
 
-	BasicSender(SerialPort* serial, int studentNo) 
+	BasicSender(SerialPort* serial, int studentNo)
 		: m_SerialPort(0, studentNo),
-		  m_packetSender(serial),
-		  m_studentNo(studentNo)
+		m_packetSender(serial),
+		m_studentNo(studentNo)
 	{}
 
 	int sendBASIC(FILE* file);

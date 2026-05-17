@@ -6,6 +6,7 @@
 #include <stdlib.h>
 //#include <unistd.h>
 //#include <termios.h>
+#include "util.h"
 
 #include "diags.h"
 
@@ -22,6 +23,26 @@ enum _SIO_ERR { ERR_NONE, ERR_NOFILE, ERR_WTF };
 
 class SerialPort;
 
+typedef struct _xdata {
+	uint8_t H;
+	uint8_t F;
+	uint8_t A;
+	uint8_t FCB[37];
+	_xdata() {}
+
+	_xdata(_xdata& origin) : H(origin.H), F(origin.F), A(origin.A)
+	{
+		memcpy(&FCB, &origin.FCB, sizeof(FCB));
+	}
+
+	_xdata(uint8_t _H, uint8_t _F, uint8_t _A, const char* fileName) : H(_H), F(_F), A(_A)
+	{
+		memset(&FCB[0], 0, sizeof(FCB));
+		FCB[0] = 8;
+		Util::dosname(fileName, (char*)&FCB[1]);
+	}
+} NetFCB;
+
 
 class SerialListener {
 public:
@@ -36,10 +57,10 @@ private:
 	mutable DWORD errors;
 
 	SerialListener* m_RxListener;
-	struct xData
+	int verbose = 0;
+public:
+	struct xData : public NetFCB
 	{
-		unsigned char H, F, A;
-		unsigned char FCB[37];
 		xData()
 		{
 			init();
@@ -65,9 +86,7 @@ private:
 			for (i = 0; i < 4; i++)
 				FCB[12 - i] = toupper(name[n - i]);
 		}
-	} /*TxData,*/ RxData;
-	int verbose = 0;
-public:
+	} /*TxData,*/ m_RxData;
 	int teacher = 0;
 	int studentNo = 127;
 	SerialPort(const char* device, int stNo);

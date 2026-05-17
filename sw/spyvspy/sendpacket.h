@@ -10,25 +10,6 @@
 
 #include <stdlib.h>
 
-typedef struct _xdata {
-    uint8_t H;
-    uint8_t F;
-    uint8_t A;
-    uint8_t FCB[37];
-    _xdata() {}
-
-    _xdata(_xdata& origin) : H(origin.H), F(origin.F), A(origin.A) 
-    {
-    	memcpy(&FCB, &origin.FCB, sizeof(FCB));
-    }
-
-    _xdata(uint8_t _H, uint8_t _F, uint8_t _A, const char* fileName) : H(_H), F(_F), A(_A)
-    {
-    	memset(&FCB[0], 0, sizeof(FCB));
-	    FCB[0] = 8;
-	    Util::dosname(fileName, (char *) &FCB[1]);
-    }
-} NetFCB;
 
 class PacketUtil {
 private:
@@ -82,7 +63,8 @@ protected:
 	}
 
 public:
-	~GenericPacket() {
+	~GenericPacket()
+	{
 		if (m_OwnData) delete[] m_OwnData;
 	}
 
@@ -211,12 +193,13 @@ public:
 };
 
 
-class PacketSender : public SerialListener {
+class PacketSender : public SerialListener
+{
 private:
 	SerialPort* serial;
 	unsigned char buf[1024];
 	int pos=0;
-	NetFCB m_RxData;
+	//NetFCB m_RxData;
 
 private:
 	int RxHandler();
@@ -232,8 +215,6 @@ public:
 	void SendPacket(int srcAddr, int dstAddr, int cmdType, const uint8_t* buf, uint16_t len, uint16_t addr1, uint16_t addr2, int last);
 	void SendPacketVal(GenericPacket&);
 	int ReceivePacket();
-	const NetFCB* GetNetFCB() const { return &m_RxData; }
+	const NetFCB* GetNetFCB() const { return &(serial->m_RxData); }
 	int waitRx(const int intents = 10);
-
-
 };

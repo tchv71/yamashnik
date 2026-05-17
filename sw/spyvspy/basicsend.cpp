@@ -306,7 +306,7 @@ int BasicSender::sendBASIC(FILE* file)
 	fread(&binBuf, basSize - 1, 1, file);
 
 	uint16_t start = 0x8001;
-	uint16_t end = start + (uint16_t) basSize - 1;
+	uint16_t end = start + (uint16_t)basSize - 1;
 	info("Tokenized BASIC file, %ld bytes; Start: %x, End: %x\n", basSize, start, end);
 
 	if (sendSHEXHeader(start, end)) {

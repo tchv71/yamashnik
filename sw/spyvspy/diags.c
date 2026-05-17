@@ -45,15 +45,15 @@ void eggog(const char* fmt, ...) {
 void dumpline(printfunc p, const uint8_t* data, int ofs, int length) {
 	p("%04x  ", ofs);
 	for (int i = 0; i < length; i++) {
-		p("%02x%c", data[ofs+i], i == 7 ? '-':' ');
+		p("%02x%c", data[ofs + i], i == 7 ? '-' : ' ');
 	}
 
 	for (int i = 0; i < 16 - length; i++) p("   ");
 
 	p(" ");
 	for (int i = 0; i < length; i++) {
-		p("%c", (data[ofs+i] >= 32 && data[ofs+i] < 128) ? 
-			data[ofs+i] : '.');
+		p("%c", (data[ofs + i] >= 32 && data[ofs + i] < 128) ?
+			data[ofs + i] : '.');
 	}
 	p("\n");
 }
