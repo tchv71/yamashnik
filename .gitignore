@@ -14,3 +14,17 @@ sw/spyvspy/spy_bdos_e900.ram
 sw/spyvspy/spy_bootstrap.bin
 
 sw/spyvspy/tpa.com
+/.vs/yamashnik2/v16/Browse.VC.db
+*.suo
+*.sqlite
+*.json
+*.db
+/sw/spyvspy/MAPINIT.COM
+/sw/spyvspy/ED.COM
+/sw/spyvspy/DDT.COM
+/sw/spyvspy/1.txt
+*.obj
+*.tlog
+*.idb
+*.pdb
+/sw/spyvspy/x64/Debug/msxnet.log
