@@ -30,3 +30,10 @@ sw/spyvspy/tpa.com
 /sw/spyvspy/1.txt
 /sw/spyvspy/.vs/msxnet/v16/Browse.VC.db
 /sw/spyvspy/.vs/msxnet/v16/.suo
+/sw/spyvspy/x64/Release/msxnet.exe.recipe
+/sw/spyvspy/x64/Release/msxnet.log
+/sw/spyvspy/x64/Release/msxnet.vcxproj.FileListAbsolute.txt
+*.pdb
+*.ipdb
+*.iobj
+*.log

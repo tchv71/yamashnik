@@ -6,7 +6,7 @@
 
 LOGLEVEL LogLevel = LOGLEVEL_INFO;
 
-static void log(LOGLEVEL threshold, const char* fmt, va_list ap) {
+static void _log(LOGLEVEL threshold, const char* fmt, va_list ap) {
 	if (LogLevel >= threshold) {
 		vprintf(fmt, ap);
 		fflush(stdout);
@@ -16,28 +16,28 @@ static void log(LOGLEVEL threshold, const char* fmt, va_list ap) {
 void verbose(const char* fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
-	log(LOGLEVEL_VERBOSE, fmt, ap);
+	_log(LOGLEVEL_VERBOSE, fmt, ap);
 	va_end(ap);
 }
 
 void morbose(const char* fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
-	log(LOGLEVEL_MORBOSE, fmt, ap);
+	_log(LOGLEVEL_MORBOSE, fmt, ap);
 	va_end(ap);
 }
 
 void info(const char* fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
-	log(LOGLEVEL_INFO, fmt, ap);
+	_log(LOGLEVEL_INFO, fmt, ap);
 	va_end(ap);
 }
 
 void eggog(const char* fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
-	log(LOGLEVEL_ZERO, fmt, ap);
+	_log(LOGLEVEL_ZERO, fmt, ap);
 	va_end(ap);
 	exit(1);
 }
